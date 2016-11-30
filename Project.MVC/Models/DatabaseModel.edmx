@@ -78,7 +78,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="VehiclesDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="VehiclesDBEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="VehicleMake" EntityType="Self.VehicleMake" />
           <EntitySet Name="VehicleModel" EntityType="Self.VehicleModel" />
           <AssociationSet Name="FK__VehicleMo__MakeI__1273C1CD" Association="Self.FK__VehicleMo__MakeI__1273C1CD">
@@ -91,7 +91,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="VehiclesDBModelStoreContainer" CdmEntityContainer="VehiclesDBEntities">
+        <EntityContainerMapping StorageEntityContainer="VehiclesDBModelStoreContainer" CdmEntityContainer="VehiclesDBEntities1">
           <EntitySetMapping Name="VehicleMake">
             <EntityTypeMapping TypeName="VehiclesDBModel.VehicleMake">
               <MappingFragment StoreEntitySet="VehicleMake">

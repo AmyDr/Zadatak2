@@ -13,10 +13,10 @@ namespace Project.MVC.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class VehiclesDBEntities : DbContext
+    public partial class VehiclesDBEntities1 : DbContext
     {
-        public VehiclesDBEntities()
-            : base("name=VehiclesDBEntities")
+        public VehiclesDBEntities1()
+            : base("name=VehiclesDBEntities1")
         {
         }
     
