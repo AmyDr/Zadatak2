@@ -1,4 +1,4 @@
-﻿@model Project.MVC.Models.VehicleModel
+﻿@model Project.Service.Models.VehicleModel
 
 @{
     ViewBag.Title = "Edit";
@@ -18,9 +18,9 @@
         @Html.HiddenFor(model => model.ID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MakeID, "MakeID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MakeID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("MakeID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.MakeID, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.MakeID, "", new { @class = "text-danger" })
             </div>
         </div>

@@ -1,4 +1,4 @@
-﻿@model Project.MVC.Models.VehicleModel
+﻿@model Project.Service.Models.VehicleModel
 
 @{
     ViewBag.Title = "Details";
@@ -10,6 +10,14 @@
     <h4>VehicleModel</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MakeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MakeID)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.ModelName)
         </dt>
@@ -24,14 +32,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.ModelAbbreviation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.VehicleMake.VehicleName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.VehicleMake.VehicleName)
         </dd>
 
     </dl>

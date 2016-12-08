@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project.Service
 {
-    class VehicleService
+    public class VehicleService
     {
     }
 }

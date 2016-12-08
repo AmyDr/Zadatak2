@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E7A5B359-A9AB-473A-B691-2C2D7D66F25D}</ProjectGuid>
+    <ProjectGuid>{BEC0F7BD-45B2-497F-B857-6D79E47EE662}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Project.Service</RootNamespace>
@@ -53,9 +53,10 @@
     <Compile Include="DAL\VehicleInitializer.cs" />
     <Compile Include="Models\VehicleMake.cs" />
     <Compile Include="Models\VehicleModel.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VehicleService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

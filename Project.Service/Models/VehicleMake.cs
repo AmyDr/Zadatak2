@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project.Service.Models
 {
-    public  class VehicleMake
+    public class VehicleMake
     {
         public int ID { get; set; }
         public string VehicleName { get; set; }

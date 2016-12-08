@@ -8,7 +8,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 
 namespace Project.Service.DAL
-{   
+{
     public class VehicleContext : DbContext
     {
         public VehicleContext() : base("name=VehiclesDBEntities1")
@@ -17,9 +17,9 @@ namespace Project.Service.DAL
         public DbSet<VehicleMake> VehicleMake { get; set; }
         public DbSet<VehicleModel> VehicleModel { get; set; }
 
-            protected override void OnModelCreating(DbModelBuilder modelBuilder)
-            {
-                modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+    }
 }
