@@ -16,3 +16,21 @@ textarea {
     max-width: 280px;
 }
 
+body {
+    background-image: url(http://usedcars.bmw.co.uk/_assets/theme/img/models/hero/2.jpg);
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center ;
+    background-attachment: fixed;  
+}
+
+.jumbotron {
+    background-color: transparent !important;
+}
+
+

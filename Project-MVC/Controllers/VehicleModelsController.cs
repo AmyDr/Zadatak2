@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Project.Service.DAL;
 using Project.Service.Models;
+using PagedList;
 
 namespace Project_MVC.Controllers
 {
@@ -16,9 +17,62 @@ namespace Project_MVC.Controllers
         private VehicleContext db = new VehicleContext();
 
         // GET: VehicleModels
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(db.VehicleModel.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "abrv_desc" : "";
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+
+
+            //paging
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            //sorting
+            var models = from m in db.VehicleModel
+                           select m;
+
+            //filtering
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                models = models.Where(m => m.ModelName.Contains(searchString)
+                                       || m.ModelAbbreviation.Contains(searchString));
+            }
+
+            //sorting
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    models = models.OrderByDescending(m => m.ModelName);
+                    break;
+
+
+                case "abrv_desc":
+                    models = models.OrderByDescending(m => m.ModelAbbreviation);
+                    break;
+
+                case "id_desc":
+                    models = models.OrderByDescending(m => m.MakeID);
+                    break;
+
+                default:
+                    models = models.OrderBy(m => m.ModelName);
+                    break;
+            }
+
+            //paging
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(models.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: VehicleModels/Details/5

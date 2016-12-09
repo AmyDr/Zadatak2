@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Project.Service.DAL;
 using Project.Service.Models;
+using PagedList;
 
 namespace Project_MVC.Controllers
 {
@@ -16,9 +17,56 @@ namespace Project_MVC.Controllers
         private VehicleContext db = new VehicleContext();
 
         // GET: VehicleMakes
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(db.VehicleMake.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "abrv_desc" : "";
+
+            //paging
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            //sorting
+            var vehicles = from v in db.VehicleMake
+                           select v;
+
+            //filtering
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                vehicles = vehicles.Where(v => v.VehicleName.Contains(searchString)
+                                       || v.VehicleAbbreviation.Contains(searchString));
+            }
+
+            //sorting
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    vehicles = vehicles.OrderByDescending(v => v.VehicleName);
+                    break;
+
+
+                case "abrv_desc":
+                    vehicles = vehicles.OrderByDescending(v => v.VehicleAbbreviation);
+                    break;
+
+                default:
+                    vehicles = vehicles.OrderBy(v => v.VehicleName);
+                    break;
+            }
+
+            //paging
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(vehicles.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: VehicleMakes/Details/5
