@@ -11,7 +11,7 @@ namespace Project.Service.DAL
 {
     public class VehicleContext : DbContext
     {
-        public VehicleContext() : base("name=VehiclesDBEntities1")
+        public VehicleContext() : base("name=VehicleContext")
         {
         }
         public DbSet<VehicleMake> VehicleMake { get; set; }

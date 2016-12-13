@@ -20,11 +20,15 @@ namespace Project.Service.DAL
 
             vehicles.ForEach(s => context.VehicleMake.Add(s));
             context.SaveChanges();
+
             var models = new List<VehicleModel>
             {
             new VehicleModel{ID=1234,MakeID=123, ModelName="Golf 6", ModelAbbreviation="G6"},
-            new VehicleModel{ID=8634,MakeID=863, ModelName="Cls", ModelAbbreviation="Cls"},
+            new VehicleModel{ID=8634,MakeID=863, ModelName="Cls", ModelAbbreviation="Cls"},   
             };
+            models.ForEach(m => context.VehicleModel.Add(m));
+            context.SaveChanges();
+            base.Seed(context);
         }
     }
 }
