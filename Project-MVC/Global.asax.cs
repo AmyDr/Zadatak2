@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project_MVC.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,12 @@ namespace Project_MVC
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            //automapping
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<AppStartMappingConfiguration>();
+            });
         }
     }
 }

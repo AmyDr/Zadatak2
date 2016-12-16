@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Project.Service.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AutoMapper;
+using System.Linq;
+using System.Web;
 
-namespace Project.Service.Models
+namespace Project_MVC.ViewModels
 {
-    public class VehicleMake
+    public class ViewVehicleMake
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

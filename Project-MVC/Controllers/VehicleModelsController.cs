@@ -9,12 +9,18 @@ using System.Web.Mvc;
 using Project.Service.DAL;
 using Project.Service.Models;
 using PagedList;
+using Project.Service;
 
 namespace Project_MVC.Controllers
 {
     public class VehicleModelsController : Controller
     {
         private VehicleContext db = new VehicleContext();
+        public List<VehicleMake> GetAll()
+        {
+            List<VehicleMake> vehicleMakeList = db.VehicleMake.ToList();
+            return vehicleMakeList;
+        }
 
         // GET: VehicleModels
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
@@ -23,7 +29,6 @@ namespace Project_MVC.Controllers
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "abrv_desc" : "";
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
-
 
             //paging
             if (searchString != null)
@@ -93,6 +98,7 @@ namespace Project_MVC.Controllers
         // GET: VehicleModels/Create
         public ActionResult Create()
         {
+            ViewBag.MakeID = db.VehicleModel.GetAll();
             return View();
         }
 
@@ -110,6 +116,7 @@ namespace Project_MVC.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.MakeID = db.VehicleModel.GetAll();
             return View(vehicleModel);
         }
 
