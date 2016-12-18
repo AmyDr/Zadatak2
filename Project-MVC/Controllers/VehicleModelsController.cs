@@ -98,7 +98,9 @@ namespace Project_MVC.Controllers
         // GET: VehicleModels/Create
         public ActionResult Create()
         {
-            ViewBag.MakeID = db.VehicleModel.GetAll();
+
+            //ViewBag.MakeID = new SelectList(db.VehicleMake, "ID", "VehicleName");
+            ViewBag.MakeID = GetAll();
             return View();
         }
 
@@ -116,7 +118,8 @@ namespace Project_MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.MakeID = db.VehicleModel.GetAll();
+            //ViewBag.MakeId = new SelectList(db.VehicleMake, "ID", "VehicleName", vehicleModel.MakeID);
+            ViewBag.MakeID = GetAll();
             return View(vehicleModel);
         }
 
