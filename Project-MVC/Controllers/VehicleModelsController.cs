@@ -1,26 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Project.Service.DAL;
 using Project.Service.Models;
 using PagedList;
-using Project.Service;
 
 namespace Project_MVC.Controllers
 {
     public class VehicleModelsController : Controller
     {
         private VehicleContext db = new VehicleContext();
-        public List<VehicleMake> GetAll()
-        {
-            List<VehicleMake> vehicleMakeList = db.VehicleMake.ToList();
-            return vehicleMakeList;
-        }
 
         // GET: VehicleModels
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
@@ -75,7 +67,7 @@ namespace Project_MVC.Controllers
             }
 
             //paging
-            int pageSize = 3;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(models.ToPagedList(pageNumber, pageSize));
         }
@@ -98,15 +90,12 @@ namespace Project_MVC.Controllers
         // GET: VehicleModels/Create
         public ActionResult Create()
         {
-
-            //ViewBag.MakeID = new SelectList(db.VehicleMake, "ID", "VehicleName");
-            ViewBag.MakeID = GetAll();
+            //dropdown list
+            ViewBag.MakeID = new SelectList(db.VehicleMake, "ID", "VehicleName");
             return View();
         }
 
         // POST: VehicleModels/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,MakeID,ModelName,ModelAbbreviation")] VehicleModel vehicleModel)
@@ -117,9 +106,8 @@ namespace Project_MVC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            //ViewBag.MakeId = new SelectList(db.VehicleMake, "ID", "VehicleName", vehicleModel.MakeID);
-            ViewBag.MakeID = GetAll();
+            //dropdown list
+            ViewBag.MakeID = new SelectList(db.VehicleMake, "ID", "VehicleName", vehicleModel.MakeID);
             return View(vehicleModel);
         }
 
@@ -139,8 +127,6 @@ namespace Project_MVC.Controllers
         }
 
         // POST: VehicleModels/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,MakeID,ModelName,ModelAbbreviation")] VehicleModel vehicleModel)

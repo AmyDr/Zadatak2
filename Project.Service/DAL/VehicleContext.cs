@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Project.Service.Models;
+﻿using Project.Service.Models;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-
 
 namespace Project.Service.DAL
 {
