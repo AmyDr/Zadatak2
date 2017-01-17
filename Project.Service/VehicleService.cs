@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Project.Service.Models;
 using Project.Service.DAL;
-using PagedList;
 using System.Data.Entity.Migrations;
 
 namespace Project.Service
@@ -46,14 +40,14 @@ namespace Project.Service
 
      
 
-        public void DeleteVehicleMake(int id)
+        public void DeleteVehicleMake(int? id)
         {
             VehicleMake vehicleMake = db.VehicleMake.Find(id);
             db.VehicleMake.Remove(vehicleMake);
             db.SaveChanges();
         }
 
-        public void DeleteVehicleModel(int id)
+        public void DeleteVehicleModel(int? id)
         {
             VehicleModel vehicleModel = db.VehicleModel.Find(id);
             db.VehicleModel.Remove(vehicleModel);
