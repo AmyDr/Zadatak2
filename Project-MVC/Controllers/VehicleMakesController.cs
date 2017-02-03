@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Project.Service;
 using Project.Service.DAL;
 using Project.Service.Models;
 using PagedList;
@@ -15,6 +16,11 @@ namespace Project_MVC.Controllers
     public class VehicleMakesController : Controller
     {
         private VehicleContext db = new VehicleContext();
+        private VehicleService vehicleService;
+        public VehicleMakesController()
+        {
+            this.vehicleService = VehicleService.GetInstance();
+        }
 
         // GET: VehicleMakes
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
@@ -38,6 +44,9 @@ namespace Project_MVC.Controllers
             //sorting
             var vehicles = from v in db.VehicleMake
                            select v;
+
+
+
 
             //filtering
             if (!String.IsNullOrEmpty(searchString))
@@ -76,7 +85,7 @@ namespace Project_MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleMake vehicleMake = db.VehicleMake.Find(id);
+            VehicleMake vehicleMake = vehicleService.FindVehicleMaker(id);
             if (vehicleMake == null)
             {
                 return HttpNotFound();
@@ -99,8 +108,7 @@ namespace Project_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.VehicleMake.Add(vehicleMake);
-                db.SaveChanges();
+                vehicleService.CreateVehicleMake(vehicleMake);
                 return RedirectToAction("Index");
             }
 
@@ -114,7 +122,8 @@ namespace Project_MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleMake vehicleMake = db.VehicleMake.Find(id);
+
+            VehicleMake vehicleMake = vehicleService.FindVehicleMaker(id);
             if (vehicleMake == null)
             {
                 return HttpNotFound();
@@ -131,8 +140,7 @@ namespace Project_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(vehicleMake).State = EntityState.Modified;
-                db.SaveChanges();
+                vehicleService.UpdateVehicleMake(vehicleMake);
                 return RedirectToAction("Index");
             }
             return View(vehicleMake);
@@ -145,7 +153,7 @@ namespace Project_MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleMake vehicleMake = db.VehicleMake.Find(id);
+            VehicleMake vehicleMake = vehicleService.FindVehicleMaker(id);
             if (vehicleMake == null)
             {
                 return HttpNotFound();
@@ -158,9 +166,7 @@ namespace Project_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            VehicleMake vehicleMake = db.VehicleMake.Find(id);
-            db.VehicleMake.Remove(vehicleMake);
-            db.SaveChanges();
+            vehicleService.DeleteVehicleMake(id);
             return RedirectToAction("Index");
         }
 

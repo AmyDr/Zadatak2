@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using Project.Service;
 using Project.Service.DAL;
 using Project.Service.Models;
 using PagedList;
@@ -13,6 +14,12 @@ namespace Project_MVC.Controllers
     public class VehicleModelsController : Controller
     {
         private VehicleContext db = new VehicleContext();
+        private VehicleService vehicleService;
+
+        public VehicleModelsController()
+        {
+            vehicleService = VehicleService.GetInstance();
+        }
 
         // GET: VehicleModels
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
@@ -37,6 +44,8 @@ namespace Project_MVC.Controllers
             //sorting
             var models = from m in db.VehicleModel
                            select m;
+            
+              
 
             //filtering
             if (!String.IsNullOrEmpty(searchString))
@@ -79,7 +88,7 @@ namespace Project_MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleModel vehicleModel = db.VehicleModel.Find(id);
+            VehicleModel vehicleModel = vehicleService.FindVehicleModel(id);
             if (vehicleModel == null)
             {
                 return HttpNotFound();
@@ -91,7 +100,8 @@ namespace Project_MVC.Controllers
         public ActionResult Create()
         {
             //dropdown list
-            ViewBag.MakeID = new SelectList(db.VehicleMake, "ID", "VehicleName");
+            ViewBag.MakeID = new SelectList(vehicleService.GetAllVehicleMake(), "ID", "VehicleName");
+            //ViewBag.MakeID = vehicleService.GetAllVehicleMake();
             return View();
         }
 
@@ -102,12 +112,12 @@ namespace Project_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.VehicleModel.Add(vehicleModel);
-                db.SaveChanges();
+                vehicleService.CreateVehicleModel(vehicleModel);
                 return RedirectToAction("Index");
             }
             //dropdown list
-            ViewBag.MakeID = new SelectList(db.VehicleMake, "ID", "VehicleName", vehicleModel.MakeID);
+            //ViewBag.MakeID = new SelectList(db.VehicleMake, "ID", "VehicleName", vehicleModel.MakeID);
+            ViewBag.MakeID = vehicleService.GetAllVehicleMake();
             return View(vehicleModel);
         }
 
@@ -118,7 +128,7 @@ namespace Project_MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleModel vehicleModel = db.VehicleModel.Find(id);
+            VehicleModel vehicleModel = vehicleService.FindVehicleModel(id);
             if (vehicleModel == null)
             {
                 return HttpNotFound();
@@ -133,10 +143,10 @@ namespace Project_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(vehicleModel).State = EntityState.Modified;
-                db.SaveChanges();
+                vehicleService.UpdateVehicleModel(vehicleModel);
                 return RedirectToAction("Index");
             }
+            ViewBag.MakeID = vehicleService.GetAllVehicleMake();
             return View(vehicleModel);
         }
 
@@ -147,7 +157,7 @@ namespace Project_MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleModel vehicleModel = db.VehicleModel.Find(id);
+            VehicleModel vehicleModel = vehicleService.FindVehicleModel(id);
             if (vehicleModel == null)
             {
                 return HttpNotFound();
@@ -160,9 +170,7 @@ namespace Project_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            VehicleModel vehicleModel = db.VehicleModel.Find(id);
-            db.VehicleModel.Remove(vehicleModel);
-            db.SaveChanges();
+            vehicleService.DeleteVehicleModel(id);
             return RedirectToAction("Index");
         }
 

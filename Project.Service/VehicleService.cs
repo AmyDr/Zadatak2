@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Project.Service;
 using Project.Service.Models;
 using Project.Service.DAL;
 using System.Data.Entity.Migrations;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Project.Service
 {
@@ -25,22 +28,39 @@ namespace Project.Service
             }
             else return Vehicleservice;
         }
-        public void CreateVehicleMake()
+        //view index R
+        public VehicleMake FindVehicleMaker(int? id)
+        {
+            return Mapper.Map<VehicleMake, VehicleMake>(db.VehicleMake.Find(id));
+        }
+
+        public VehicleModel FindVehicleModel(int? id)
+        {
+            return Mapper.Map<VehicleModel, VehicleModel>(db.VehicleModel.Find(id));
+        }
+        public object SearchVehicleModel()
+        {
+            var models = db.VehicleModel;
+            return models;
+        }
+
+        // create C
+        public void CreateVehicleMake(VehicleMake vehicleMake)
         {
 
             db.VehicleMake.Add(Mapper.Map<VehicleMake>(vehicleMake));
             db.SaveChanges();
         }
 
-        public void CreateVehicleModel()
+        public void CreateVehicleModel(VehicleModel vehicleModel)
         {
             db.VehicleModel.Add(Mapper.Map<VehicleModel>(vehicleModel));
             db.SaveChanges();
         }
 
      
-
-        public void DeleteVehicleMake(int? id)
+        // delete D
+        public void DeleteVehicleMake(int id)
         {
             VehicleMake vehicleMake = db.VehicleMake.Find(id);
             db.VehicleMake.Remove(vehicleMake);
@@ -53,17 +73,23 @@ namespace Project.Service
             db.VehicleModel.Remove(vehicleModel);
             db.SaveChanges();
         }
-
-        public void UpdateVehicleMake()
+        // update U
+        public void UpdateVehicleMake(VehicleMake vehicleMake)
         {
             db.Set<VehicleMake>().AddOrUpdate(Mapper.Map<VehicleMake>(vehicleMake));
             db.SaveChanges();
         }
 
-        public void UpdateVehicleModel()
+        public void UpdateVehicleModel(VehicleModel vehicleModel)
         {
             db.Set<VehicleModel>().AddOrUpdate(Mapper.Map<VehicleModel>(vehicleModel));
             db.SaveChanges();
+        }
+
+        public List<VehicleMake> GetAllVehicleMake()
+        {
+            List<VehicleMake> vehicleMakeList = db.VehicleMake.ToList();
+            return vehicleMakeList;
         }
 
     }
