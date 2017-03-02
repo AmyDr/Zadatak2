@@ -101,7 +101,6 @@ namespace Project_MVC.Controllers
         {
             //dropdown list
             ViewBag.MakeID = new SelectList(vehicleService.GetAllVehicleMake(), "ID", "VehicleName");
-            //ViewBag.MakeID = vehicleService.GetAllVehicleMake();
             return View();
         }
 
@@ -116,7 +115,6 @@ namespace Project_MVC.Controllers
                 return RedirectToAction("Index");
             }
             //dropdown list
-            //ViewBag.MakeID = new SelectList(db.VehicleMake, "ID", "VehicleName", vehicleModel.MakeID);
             ViewBag.MakeID = vehicleService.GetAllVehicleMake();
             return View(vehicleModel);
         }

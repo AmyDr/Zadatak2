@@ -28,7 +28,7 @@ namespace Project.Service
             }
             else return Vehicleservice;
         }
-        //view index R
+        //view index 
         public VehicleMake FindVehicleMaker(int? id)
         {
             return Mapper.Map<VehicleMake, VehicleMake>(db.VehicleMake.Find(id));
@@ -44,7 +44,7 @@ namespace Project.Service
             return models;
         }
 
-        // create C
+        // create 
         public void CreateVehicleMake(VehicleMake vehicleMake)
         {
 
@@ -59,7 +59,7 @@ namespace Project.Service
         }
 
      
-        // delete D
+        // delete 
         public void DeleteVehicleMake(int id)
         {
             VehicleMake vehicleMake = db.VehicleMake.Find(id);
@@ -73,7 +73,7 @@ namespace Project.Service
             db.VehicleModel.Remove(vehicleModel);
             db.SaveChanges();
         }
-        // update U
+        // update 
         public void UpdateVehicleMake(VehicleMake vehicleMake)
         {
             db.Set<VehicleMake>().AddOrUpdate(Mapper.Map<VehicleMake>(vehicleMake));
